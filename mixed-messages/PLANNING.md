@@ -1,5 +1,4 @@
 # Mixed Messages - Planning
-===========================
 
 ## Script
 * objects to store different parts of speech related to different topics
