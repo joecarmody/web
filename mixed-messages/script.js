@@ -141,5 +141,5 @@ const places = ['their house', 'the beach', 'the school', 'the police station', 
                 'the tree', 'the forest', 'the post office', 'the city hall', 'the park', 'the road', 'the bridge'];
 
 const sentenceGenerator = sentenceFactory(verbs, pronouns, places);
-
-document.write(sentenceGenerator.randomParagraph(100));
+const sentenceCount = prompt('Number of sentences: ');
+document.write(sentenceGenerator.randomParagraph(sentenceCount));
