@@ -142,4 +142,4 @@ const places = ['their house', 'the beach', 'the school', 'the police station', 
 
 const sentenceGenerator = sentenceFactory(verbs, pronouns, places);
 
-console.log(sentenceGenerator.randomParagraph(100));
+document.write(sentenceGenerator.randomParagraph(100));
