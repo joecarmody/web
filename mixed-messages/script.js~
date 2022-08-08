@@ -1,0 +1,142 @@
+
+const sentenceFactory = (verbs, pronouns, places) => {
+    return {
+        // fields for arrays of input words
+        _verbs: verbs,
+        get verbs () {
+            return this._verbs;
+        },
+        _pronouns: pronouns,
+        get pronouns () {
+            return this._pronouns;
+        },
+        _places: places,
+        get places () {
+            return this._places;
+        },
+
+        // get random word from input word type array
+        randomWord (type) {
+            switch (type) {
+                case 'verb':
+                    return this.verbs[Math.floor(Math.random() * this.verbs.length)];
+                case 'pronoun':
+                    return this.pronouns[Math.floor(Math.random() * this.pronouns.length)];
+                case 'place':
+                    return this.places[Math.floor(Math.random() * this.places.length)];
+            }
+        },
+        
+        // functions printing sentences of increasing complexity from word arrays:
+
+        simpleSentence () {
+            // get random words
+            let verb = this.randomWord('verb');
+            const pronoun = this.randomWord('pronoun');
+            
+            // conjugation
+            if (pronoun === 'He' || pronoun === 'She') verb += 's';
+
+            // return sentence
+            return (`${pronoun} ${verb}.`);
+
+        },
+
+        likeSentence () {
+            // get random words
+            const verb = this.randomWord('verb');
+            const pronoun = this.randomWord('pronoun');
+            let like = 'like';
+
+            // conjugation
+            if (pronoun === 'He' || pronoun === 'She') like += 's';
+
+            // return sentence
+            return (`${pronoun} ${like} to ${verb}.`);
+        },
+
+        placeSentence () {
+            // get random words
+            let verb = this.randomWord('verb');
+            const pronoun = this.randomWord('pronoun');
+            let like = 'like';
+            const place = this.randomWord('place');
+
+            // conjugation
+            if (pronoun === 'He' || pronoun === 'She') like += 's';
+
+            // return sentence
+            return (`${pronoun} ${like} to ${verb} near ${place}.`);
+        },
+
+        compoundSentence () {
+            // get random words
+            let verb1;
+            let verb2;
+            let like1 = 'like';
+            let like2 = 'like';
+            const place1 = this.randomWord('place');
+            const place2 = this.randomWord('place');
+            const pronoun1 = this.randomWord('pronoun');
+            const pronoun2 = this.randomWord('pronoun');
+            
+            while (verb1 === verb2) {
+                verb1 = this.randomWord('verb');
+                verb2 = this.randomWord('verb');
+            }
+
+            // conjugation
+            if (pronoun1 === 'He' || pronoun1 === 'She') like1 += 's';
+            if (pronoun2 === 'He' || pronoun2 === 'She') like2 += 's';
+
+            // print case 1
+            if (pronoun1 === pronoun2) return (`${pronoun1} ${like1} to ${verb1} and ${verb2}.`);
+
+            // return sentence
+            return (`${pronoun1} ${like1} to ${verb1} near ${place1}, but ${pronoun2} ${like2} to ${verb2} near ${place2}.`)
+        
+        },
+
+        // random sentence selecting from sentence functions
+        randomSentence () {
+            const sentenceTypeNumber = Math.floor(Math.random() * 4) + 1;
+            switch (sentenceTypeNumber) {
+                case 1:
+                    return this.simpleSentence();
+                case 2:
+                    return this.likeSentence();
+                case 3:
+                    return this.placeSentence();
+                case 4:
+                    return this.compoundSentence();
+
+            }
+        },
+
+        randomParagraph (numSentences) {
+            let paragraph = this.randomSentence();
+            for (let i = 0; i < numSentences - 1; i++) {
+                sentence = this.randomSentence();
+                paragraph += ' ' + sentence;
+            }
+            return paragraph;
+        }
+
+    }
+}
+// I, You, He, She, They
+const pronouns = ['I', 'You', 'He', 'She', 'They'];
+
+const verbs = ['swim', 'run', 'jump', 'fly', 'sing', 'play', 'adapt', 'achieve', 'agree', 'bake', 'bathe', 'believe', 'calculate', 'climb', 
+                'communicate', 'dance', 'deny', 'disagree', 'eat', 'earn', 'exist', 'fail', 'fight', 'give', 'grow', 'hate', 'hit', 'hesitate',
+                'ignore', 'impress', 'improve', 'kick', 'kiss', 'kneel', 'laugh', 'lead', 'learn', 'lie', 'measure', 'need',' negotiate', 
+                'observe', 'obtain', 'own', 'paint', 'pinch', 'persuade', 'quit', 'qualify', 'read', 'reflect', 'regret', 'sew', 'shrink', 'shake',
+                'take', 'taste', 'think', 'understand', 'volunteer', 'wake', 'walk', 'write'];
+
+const places = ['their house', 'the beach', 'the school', 'the police station', 'the hospital', 'the bar', 'the library', 'the restaurant',
+                'the lake', 'the hotel', 'the mansion', 'the palace', 'the mountain', 'the hill', 'the fountain', 'the pond', 'the river',
+                'the tree', 'the forest', 'the post office', 'the city hall', 'the park', 'the road', 'the bridge'];
+
+const sentenceGenerator = sentenceFactory(verbs, pronouns, places);
+const sentenceCount = prompt('Number of sentences: ');
+document.write(sentenceGenerator.randomParagraph(sentenceCount));

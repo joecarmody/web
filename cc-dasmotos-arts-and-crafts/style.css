@@ -1,0 +1,52 @@
+* {
+    padding: 0;
+    margin: 5px;
+    font-family: Helvetica;
+}
+
+#title {
+    background-image: url('img/pattern.webp');
+    width: 100%;
+    margin-top: 50px; 
+    margin-bottom: 50px;
+}
+
+h1 {
+    font-size: 100px;
+    font-weight: bold;
+    color: khaki;
+    text-align: center;
+}
+
+h2 {
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+h3 {
+    color: grey;
+}
+
+p {
+    color: rgb(179, 179, 179);
+}
+
+strong {
+    font-weight: bold;
+    color: blue;
+}
+
+#hacksaw-section .heading {
+    background-color: mediumspringgreen;
+}
+
+#frames-section .heading {
+    background-color: lightcoral;
+}
+
+#paint-section .heading {
+    background-color: skyblue;
+}

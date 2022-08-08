@@ -1,5 +1,3 @@
-// factory function for word storage objects
-
 const sentenceFactory = (verbs, pronouns, places) => {
     return {
         // fields for arrays of input words
@@ -15,7 +13,6 @@ const sentenceFactory = (verbs, pronouns, places) => {
         get places () {
             return this._places;
         },
-
         // get random word from input word type array
         randomWord (type) {
             switch (type) {
@@ -27,9 +24,7 @@ const sentenceFactory = (verbs, pronouns, places) => {
                     return this.places[Math.floor(Math.random() * this.places.length)];
             }
         },
-        
         // functions printing sentences of increasing complexity from word arrays:
-
         simpleSentence () {
             // get random words
             let verb = this.randomWord('verb');
@@ -42,30 +37,24 @@ const sentenceFactory = (verbs, pronouns, places) => {
             return (`${pronoun} ${verb}.`);
 
         },
-
         likeSentence () {
             // get random words
             const verb = this.randomWord('verb');
             const pronoun = this.randomWord('pronoun');
             let like = 'like';
-
             // conjugation
             if (pronoun === 'He' || pronoun === 'She') like += 's';
-
             // return sentence
             return (`${pronoun} ${like} to ${verb}.`);
         },
-
         placeSentence () {
             // get random words
             let verb = this.randomWord('verb');
             const pronoun = this.randomWord('pronoun');
             let like = 'like';
             const place = this.randomWord('place');
-
             // conjugation
             if (pronoun === 'He' || pronoun === 'She') like += 's';
-
             // return sentence
             return (`${pronoun} ${like} to ${verb} near ${place}.`);
         },
@@ -125,9 +114,7 @@ const sentenceFactory = (verbs, pronouns, places) => {
 
     }
 }
-
 // I, You, He, She, They
-
 const pronouns = ['I', 'You', 'He', 'She', 'They'];
 
 const verbs = ['swim', 'run', 'jump', 'fly', 'sing', 'play', 'adapt', 'achieve', 'agree', 'bake', 'bathe', 'believe', 'calculate', 'climb', 
