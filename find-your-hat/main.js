@@ -117,12 +117,11 @@ class Player {
     }
 }
 
-const [fieldHeight, fieldWidth] = [10, 20];
+const [fieldHeight, fieldWidth] = [25, 50];
 const playerPos = [Math.floor(Math.random()*fieldWidth), Math.floor(Math.random()*fieldHeight)];
-console.log(playerPos);
 const field = new Field(Field.generateField(fieldHeight, fieldWidth, 20, playerPos));
 const player = new Player([playerPos[0], fieldHeight - playerPos[1] - 1], field);
-const hardMode = true;
+const hardMode = false;
 
 while (!(hatFound || fellInHole || outOfBounds)) {
     field.print();
