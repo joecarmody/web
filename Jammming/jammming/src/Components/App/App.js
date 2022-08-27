@@ -8,9 +8,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchResults: [],
-      playlistName: "",
-      playlistTracks: [],
+      searchResults: [{name: "name", album: "album", artist: "artist", id: "1"}],
+      playlistName: "playlist",
+      playlistTracks: [{name: "name", album: "album", artist: "artist", id: "2"}],
     };
     this.addTrack = this.addTrack.bind(this);
   }
@@ -20,7 +20,7 @@ class App extends React.Component {
       (trackObj) => trackObj.id
     );
     if (!playlistTrackIds.includes(track.id)) {
-      const newPlaylistTracks = this.state.playlistTracks.append(track);
+      const newPlaylistTracks = this.state.playlistTracks.concat(track);
       this.setState({ playlistTracks: newPlaylistTracks });
     }
   }
