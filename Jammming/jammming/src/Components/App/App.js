@@ -7,11 +7,22 @@ import { Playlist } from "../Playlist/Playlist";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      searchResults: [], 
+    this.state = {
+      searchResults: [],
       playlistName: "",
-      playlistTracks: []
+      playlistTracks: [],
     };
+    this.addTrack = this.addTrack.bind(this);
+  }
+
+  addTrack(track) {
+    const playlistTrackIds = this.state.playlistTracks.map(
+      (trackObj) => trackObj.id
+    );
+    if (!playlistTrackIds.includes(track.id)) {
+      const newPlaylistTracks = this.state.playlistTracks.append(track);
+      this.setState({ playlistTracks: newPlaylistTracks });
+    }
   }
 
   render() {
@@ -23,9 +34,14 @@ class App extends React.Component {
         <div className="App">
           <SearchBar />
           <div className="App-playlist">
-            <SearchResults searchResults={this.state.searchResults} />
-            <Playlist playlistName={this.state.playlistName}
-                      playlistTracks={this.state.playlistTracks} />
+            <SearchResults
+              searchResults={this.state.searchResults}
+              onAdd={this.addTrack}
+            />
+            <Playlist
+              playlistName={this.state.playlistName}
+              playlistTracks={this.state.playlistTracks}
+            />
           </div>
         </div>
       </div>
