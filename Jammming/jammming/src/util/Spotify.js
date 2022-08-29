@@ -1,8 +1,6 @@
-const fs = require('fs');
-
 let accessToken;
 const clientID = "99628c0081b8445398a6d62ed172b8b3";
-const redirectURI = "http://localhost:3000";
+const redirectURI = "http://localhost:3000/";
 
 const Spotify = {
   getAccessToken() {
@@ -14,7 +12,7 @@ const Spotify = {
     const urlAccessToken = url.match(/access_token=([^&]*)/);
     const urlExpiresIn = url.match(/expires_in=([^&]*)/);
 
-    if (accessToken && urlExpiresIn) {
+    if (urlAccessToken && urlExpiresIn) {
       accessToken = urlAccessToken[1];
       const expiresIn = Number(urlExpiresIn[1]);
       window.setTimeout(() => (accessToken = ""), expiresIn * 1000);
@@ -26,7 +24,7 @@ const Spotify = {
   },
 
   async search(term) {
-    Spotify.getAccessToken();
+    accessToken = Spotify.getAccessToken();
 
     const endpoint = `https://api.spotify.com/v1/search?type=track&q=${term}`;
 
@@ -36,21 +34,19 @@ const Spotify = {
       });
       if (response.ok) {
         const jsonResponse = await response.json();
-        const trackArray = jsonResponse.tracks.map((track) => {
+        const trackArray = jsonResponse.tracks.items.map((item) => {
           return {
-            id: track.id,
-            name: track.name,
-            artist: track.artists[0].name,
-            album: track.album.name,
-            uri: track.uri,
+            id: item.id,
+            name: item.name,
+            artist: item.artists[0].name,
+            album: item.album.name,
+            uri: item.uri,
           };
         });
         return trackArray;
       }
     } catch (error) {
-      fs.writeFile('../output.txt', error, (err) => {
-        if (err) throw err
-      });
+      console.log(error);
     }
 
     return [];
