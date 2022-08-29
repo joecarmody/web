@@ -10,12 +10,13 @@ class App extends React.Component {
     super(props);
     this.state = {
       searchResults: [
-        { name: "name", album: "album", artist: "artist", id: "1" },
+        /*{ name: "name", album: "album", artist: "artist", id: "1" },*/
       ],
       playlistName: "playlist",
       playlistTracks: [
         { name: "name", album: "album", artist: "artist", id: "2", uri: "asdf" },
       ],
+      searchTerm: ""
     };
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
@@ -50,8 +51,10 @@ class App extends React.Component {
     return trackURIs;
   }
 
-  search(term) {
-    this.setState({ searchResults: Spotify.search(term)});
+  async search(term) {
+    const results = await Spotify.search(term);
+    console.log(results);
+    this.setState({ searchResults: results });
   }
 
   render() {
