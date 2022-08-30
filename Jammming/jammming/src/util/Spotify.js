@@ -51,6 +51,69 @@ const Spotify = {
 
     return [];
   },
+
+  async savePlaylist(name, trackURIArray) {
+    if (!name && !trackURIArray.length) {
+      return;
+    }
+
+    accessToken = Spotify.getAccessToken();
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+    };
+    let userID, playlistID;
+
+    const usernameEndpoint = "https://api.spotify.com/v1/me";
+    try {
+      const usernameResponse = await fetch(usernameEndpoint, {
+        headers: headers,
+      });
+      if (usernameResponse.ok) {
+        const jsonUsernameResponse = await usernameResponse.json();
+        userID = jsonUsernameResponse.id;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    if (!userID) {
+      return;
+    }
+
+    const playlistIDEndpoint = `https://api.spotify.com/v1/users/${userID}/playlists`;
+    try {
+      const playlistIDResponse = await fetch(playlistIDEndpoint, {
+        headers: headers,
+        method: "POST",
+        body: JSON.stringify({ name: name }),
+      });
+      if (playlistIDResponse.ok) {
+        const jsonPlaylistIDResponse = await playlistIDResponse.json();
+        playlistID = jsonPlaylistIDResponse.id;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    if (!playlistID) {
+      return;
+    }
+
+    const newPlaylistEndpoint = `https://api.spotify.com/v1/users/${userID}/playlists/${playlistID}/tracks`;
+    try {
+      const newPlaylistEndpointResponse = await fetch(newPlaylistEndpoint, {
+        headers: headers,
+        method: "POST",
+        body: JSON.stringify({ uris: trackURIArray }),
+      });
+      if (newPlaylistEndpointResponse.ok) {
+        const jsonNewPlaylistEndpointResponse = await newPlaylistEndpointResponse.json();
+        playlistID = jsonNewPlaylistEndpointResponse.id;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default Spotify;

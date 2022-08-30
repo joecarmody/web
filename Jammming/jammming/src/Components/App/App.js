@@ -10,7 +10,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       searchResults: [],
-      playlistName: "playlist",
+      playlistName: "New Playlist",
       playlistTracks: [],
       searchTerm: "",
     };
@@ -42,8 +42,12 @@ class App extends React.Component {
     this.setState({ playlistName: name });
   }
 
-  savePlaylist() {
-    const trackURIs = this.state.playlistTracks.map((track) => track.uri);
+  async savePlaylist() {
+    const trackURIs = await Spotify.savePlaylist(
+      this.state.playlistName,
+      this.state.playlistTracks.map((track) => track.uri)
+    );
+    this.setState({ playlistName: "New Playlist", playlistTracks: [] });
     return trackURIs;
   }
 
